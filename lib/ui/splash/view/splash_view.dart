@@ -17,7 +17,6 @@ class SplashView extends StatelessWidget {
             fit: BoxFit.cover,
           ),
         ),
-        child: Text('data'),
       ),
     );
   }
