@@ -7,6 +7,7 @@ class CustomizedTextFieldGreyBg extends StatelessWidget {
   final String? Function(String?)? validator;
   final String hintText;
   final TextInputType? keyboardType;
+  final double? height; // optional height
 
   const CustomizedTextFieldGreyBg({
     Key? key,
@@ -15,12 +16,13 @@ class CustomizedTextFieldGreyBg extends StatelessWidget {
     this.nextFocusNode,
     this.validator,
     this.hintText = "",
-    this.keyboardType ,
+    this.keyboardType,
+    this.height, // added
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return TextFormField(
+    final textField = TextFormField(
       controller: controller,
       validator: validator,
       keyboardType: keyboardType ?? TextInputType.text,
@@ -38,45 +40,35 @@ class CustomizedTextFieldGreyBg extends StatelessWidget {
         hintStyle: const TextStyle(color: Colors.grey),
         filled: true,
         fillColor: Colors.grey.shade100,
-        contentPadding: const EdgeInsets.symmetric(vertical: 18, horizontal: 16),
+        contentPadding: height == null
+            ? const EdgeInsets.symmetric(vertical: 18, horizontal: 16) // default
+            : const EdgeInsets.symmetric(horizontal: 16, vertical: 0), // balance text inside
 
-        // Default border when enabled but not focused
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.grey, // light grey border
-            width: 1.0,
-          ),
+          borderSide: const BorderSide(color: Colors.grey, width: 1.0),
         ),
-
-        // Border when the field is focused
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.grey,
-            width: 1.5,
-          ),
+          borderSide: const BorderSide(color: Colors.grey, width: 1.5),
         ),
-
-        // Error border
         errorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1.0,
-          ),
+          borderSide: const BorderSide(color: Colors.red, width: 1.0),
         ),
-
-        // Border when focused with error
         focusedErrorBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
-          borderSide: const BorderSide(
-            color: Colors.red,
-            width: 1.5,
-          ),
+          borderSide: const BorderSide(color: Colors.red, width: 1.5),
         ),
       ),
     );
+
+    // Wrap only if height is given
+    if (height != null) {
+      return SizedBox(height: height, child: textField);
+    } else {
+      return textField;
+    }
   }
 }
 

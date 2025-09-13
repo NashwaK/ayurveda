@@ -61,6 +61,7 @@ class SignUpView extends StatelessWidget {
                       txtColor: Colors.black,
                       icon: Icons.add,
                       onTap: (){
+                        createTreatmentPopup();
                         // Get.toNamed(Routes.login);
                         // logic.postData(context);
                         // logic.update();

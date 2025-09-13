@@ -339,3 +339,218 @@ class TreatmentTimePart extends StatelessWidget {
     );
   }
 }
+
+createTreatmentPopup() async {
+  return await showDialog(
+    context: Get.context!,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+        contentPadding: const EdgeInsets.all(20),
+        content: GetBuilder<SignUpController>(
+          builder: (logic) {
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                /// Title
+                const Text(
+                  "Choose Treatment",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 8),
+
+                /// Dropdown
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFF1F1F1),
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton<String>(
+                      value: null,
+                      isExpanded: true,
+                      hint: const Text("Choose preferred treatment"),
+                      items: ["Therapy", "Massage", "Checkup"].map((e) {
+                        return DropdownMenuItem(
+                          value: e,
+                          child: Text(e),
+                        );
+                      }).toList(),
+                      onChanged: (value) {
+                        // logic.selectedTreatment = value;
+                        // logic.update();
+                      },
+                    ),
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                /// Patients Section
+                const Text(
+                  "Add Patients",
+                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+                ),
+                const SizedBox(height: 12),
+
+                /////-------------------------------------------------------------
+                MalePatients(),
+                FemalePatients().cPadOnly(t: 10),
+                /////-------------------------------------------------------------
+                // _buildPatientRow("Male"),
+                // const SizedBox(height: 12),
+                // _buildPatientRow("Female"),
+
+                const SizedBox(height: 24),
+
+                /// Save Button
+                SizedBox(
+                  width: double.infinity,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFF389A48),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                    onPressed: () {
+                      Get.back(); // close popup
+                      // logic.saveTreatment();
+                    },
+                    child: const Text(
+                      "Save",
+                      style: TextStyle(
+                        fontWeight: FontWeight.w600,
+                        fontSize: 16,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            );
+          },
+        ),
+      );
+    },
+  );
+}
+
+class MalePatients extends StatelessWidget {
+  const MalePatients({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF1F1F1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              'Male',
+              style: const TextStyle(fontSize: 14, color: Colors.black87),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: (){},
+          child: Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: Colors.green,
+              shape: BoxShape.circle,
+            ),
+            child: Text('-').cToCenter,
+          ),
+        ).cPadSymmetric(h: 10),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 6,horizontal: 15),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(color: Colors.grey)
+          ),
+          child: Text('3'),
+        ),
+        GestureDetector(
+          onTap: (){},
+          child: Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: Colors.green,
+              shape: BoxShape.circle,
+            ),
+            child: Text('+').cToCenter,
+          ),
+        ).cPadSymmetric(h: 10),
+      ],
+    );
+  }
+}
+class FemalePatients extends StatelessWidget {
+  const FemalePatients({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+            decoration: BoxDecoration(
+              color: const Color(0xFFF1F1F1),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: Text(
+              'Female',
+              style: const TextStyle(fontSize: 14, color: Colors.black87),
+            ),
+          ),
+        ),
+        GestureDetector(
+          onTap: (){},
+          child: Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: Colors.green,
+              shape: BoxShape.circle,
+            ),
+            child: Text('-').cToCenter,
+          ),
+        ).cPadSymmetric(h: 10),
+        Container(
+          padding: EdgeInsets.symmetric(vertical: 6,horizontal: 15),
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(color: Colors.grey)
+          ),
+          child: Text('3'),
+        ),
+        GestureDetector(
+          onTap: (){},
+          child: Container(
+            width: 36,
+            height: 36,
+            decoration: BoxDecoration(
+              color: Colors.green,
+              shape: BoxShape.circle,
+            ),
+            child: Text('+').cToCenter,
+          ),
+        ).cPadSymmetric(h: 10),
+      ],
+    );
+  }
+}

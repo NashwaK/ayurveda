@@ -35,22 +35,26 @@ class LoginView extends StatelessWidget {
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     FirstPart(),
+                    SizedBox(height: 15,),
+                    Text('Email'),
                     CustomizedTextFieldGreyBg(
                       controller: logic.emailController,
                       hintText: 'Enter your email',
                       focusNode: logic.emailFocusNode,
                       nextFocusNode: logic.passwordFocusNode,
                       validator: logic.validateEmail,
-                    ).cPadOnly(t: 10),
+                    ).cPadOnly(t: 5,b: 15),
+                    Text('Password'),
                     CustomizedTextFieldGreyBg(
                       controller: logic.emailController,
                       hintText: 'Enter password',
                       focusNode: logic.emailFocusNode,
                       nextFocusNode: logic.passwordFocusNode,
                       validator: logic.validateEmail,
-                    ).cPadOnly(t: 10),
+                    ).cPadOnly(t: 5,b: 15),
                     const SizedBox(height: 40),
                     CommonButton(
                       text: 'Login',
