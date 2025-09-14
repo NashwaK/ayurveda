@@ -1,5 +1,5 @@
-var baseUrlCommon = '';
+var baseUrlCommon = 'https://flutter-amr.noviindus.in/api/';
 
 class SessionKeys {
-  static const FAVOURITE = 'favourite';
+  static const TOKEN = 'token';
 }

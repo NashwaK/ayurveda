@@ -16,59 +16,62 @@ class LoginView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: GetBuilder<LoginController>(
         builder: (logic) {
-          return SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: context.cHeight * 0.4,
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage(backgroundImage),
-                      fit: BoxFit.cover,
+          return Form(
+            key: logic.loginKey,
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Container(
+                    height: context.cHeight * 0.4,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: AssetImage(backgroundImage),
+                        fit: BoxFit.cover,
+                      ),
                     ),
+                    child: Image.asset(logo,height: 50,),
                   ),
-                  child: Image.asset(logo,height: 50,),
-                ),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    FirstPart(),
-                    SizedBox(height: 15,),
-                    Text('Email'),
-                    CustomizedTextFieldGreyBg(
-                      controller: logic.emailController,
-                      hintText: 'Enter your email',
-                      focusNode: logic.emailFocusNode,
-                      nextFocusNode: logic.passwordFocusNode,
-                      validator: logic.validateEmail,
-                    ).cPadOnly(t: 5,b: 15),
-                    Text('Password'),
-                    CustomizedTextFieldGreyBg(
-                      controller: logic.emailController,
-                      hintText: 'Enter password',
-                      focusNode: logic.emailFocusNode,
-                      nextFocusNode: logic.passwordFocusNode,
-                      validator: logic.validateEmail,
-                    ).cPadOnly(t: 5,b: 15),
-                    const SizedBox(height: 40),
-                    CommonButton(
-                      text: 'Login',
-                      bgColor: primaryColor,
-                      txtColor: Colors.white,
-                      onTap: (){
-                        Get.toNamed(Routes.signUp);
-                        // logic.postData(context);
-                        // logic.update();
-                      },
-                    ).cPadOnly(t: 10),
-                  ],
-                ).cPadAll(20)
-              ],
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      FirstPart(),
+                      SizedBox(height: 15,),
+                      Text('Email'),
+                      CustomizedTextFieldGreyBg(
+                        controller: logic.emailController,
+                        hintText: 'Enter your email',
+                        focusNode: logic.emailFocusNode,
+                        nextFocusNode: logic.passwordFocusNode,
+                        // validator: logic.validateEmail,
+                      ).cPadOnly(t: 5,b: 15),
+                      Text('Password'),
+                      CustomizedTextFieldGreyBg(
+                        controller: logic.passwordController,
+                        hintText: 'Enter password',
+                        focusNode: logic.passwordFocusNode,
+                        // nextFocusNode: logic.passwordFocusNode,
+                        // validator: logic.validateEmail,
+                      ).cPadOnly(t: 5,b: 15),
+                      const SizedBox(height: 40),
+                      CommonButton(
+                        text: 'Login',
+                        bgColor: primaryColor,
+                        txtColor: Colors.white,
+                        onTap: (){
+                          logic.postData(context);
+                          logic.update();
+                        },
+                      ).cPadOnly(t: 10),
+                    ],
+                  ).cPadAll(20)
+                ],
+              ),
             ),
           );
         }

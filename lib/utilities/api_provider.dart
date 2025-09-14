@@ -1,4 +1,9 @@
+import 'package:ayurveda/model/login_model.dart';
+import 'package:ayurveda/model/patientlist_model.dart';
+import 'package:ayurveda/utilities/com_binding.dart';
 import 'package:ayurveda/utilities/session_keys.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter_custom_utils/util/string_utils.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/connect.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -11,52 +16,50 @@ class Api extends GetConnect {
   var err = {'error': false, 'message': 'Network Or Other related issue'};
 
 //------------------------------- oms -------------------------------
-//   @override
-//   void onInit() {
-//     super.onInit();
-//     httpClient.baseUrl = baseUrlCommon;
-//     httpClient.addRequestModifier<dynamic>((request) {
-//       request.headers['Authorization'] =
-//       'Bearer ${AppSession.to.session.read(SessionKeys.TOKEN) ?? ' '}';
-//       return request;
-//     });
-//   }
-
   @override
   void onInit() {
     super.onInit();
     httpClient.baseUrl = baseUrlCommon;
+    httpClient.addRequestModifier<dynamic>((request) {
+      request.headers['Authorization'] =
+      'Bearer ${AppSession.to.session.read(SessionKeys.TOKEN) ?? ' '}';
+      return request;
+    });
   }
 
-  // Future<MoviesModelClass> getMovieList({String? cursor, int perPage = 20}) {
-  //   Map<String, dynamic> queryParams = {
-  //     'per_page': perPage.toString(),
-  //   };
-  //
-  //   if (cursor != null && cursor.isNotEmpty) {
-  //     queryParams['cursor'] = cursor;
-  //   }
-  //
-  //   return get(
-  //     'movies/infinite-scroll',
-  //     query: queryParams,
-  //   ).then((value) {
-  //     if (kDebugMode) {
-  //       print('movieList cursor: $cursor');
-  //       print('Status: ${value.statusCode}');
-  //       print('Response: ${value.body}');
-  //     }
-  //
-  //     if (value.statusCode == 200 && value.body != null) {
-  //       return MoviesModelClass.fromJson(value.body);
-  //     } else {
-  //       throw Exception('Failed to load movies: ${value.statusCode}');
-  //     }
-  //   }).catchError((error) {
-  //     if (kDebugMode) {
-  //       print('API Error: $error');
-  //     }
-  //     throw error;
-  //   });
-  // }
+  Future<LoginModelClass> userLogin({
+    required String userName,
+    required String password,
+  }) {
+    print('This is started---<>');
+    return post(
+      'Login',
+      cFormUrlEncode(
+        {
+          'username': userName,
+          'password': password,
+        },
+      ),
+      contentType: 'application/x-www-form-urlencoded',
+    ).then((value) {
+      if (kDebugMode) {
+        print('data ---------yg>${value.body}');
+        print('emailOrMobile --------->${userName}');
+        print('password --------->${password}');
+      }
+      return LoginModelClass.fromJson(value.body ?? err);
+    });
+  }
+
+  Future<PatientListModelClass> getPatientList() {
+    return get(
+      'PatientList',
+    ).then((value) {
+      if (kDebugMode) {
+        print('patient  List = ${value.body}');
+        print('patient  List = ${value.statusCode}');
+      }
+      return PatientListModelClass.fromJson(value.body ?? err);
+    });
+  }
 }

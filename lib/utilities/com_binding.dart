@@ -15,6 +15,6 @@ class ComBinding implements Bindings {
 
 class AppSession extends GetxController {
   static AppSession get to => Get.find();
-  var session = GetStorage('order_own');
+  var session = GetStorage('ayur_veda');
 
 }

@@ -2,7 +2,6 @@ import 'package:ayurveda/res/colors.dart';
 import 'package:ayurveda/ui/home/bind/home_bind.dart';
 import 'package:ayurveda/utilities/common_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_custom_utils/flutter_custom_utils.dart';
 import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
 
@@ -106,9 +105,6 @@ class SortingPart extends StatelessWidget {
   }
 }
 
-
-
-
 class ListPart extends StatelessWidget {
   const ListPart({super.key});
 
@@ -116,108 +112,116 @@ class ListPart extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetBuilder<HomeController>(
       builder: (logic) {
-        return ListView.builder(
-          itemCount: 10,
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          itemBuilder: (context, i) {
-            return Container(
-              margin: const EdgeInsets.only(bottom: 16),
-              padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(
-                color: const Color.fromRGBO(241, 241, 241, 1),
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  /// Top Row
-                  Row(
+        return Column(
+          children: [
+            (logic.patientListModelClass?.patient?.length == 0)
+            ? Text('No Data')
+            : ListView.builder(
+              itemCount: 10,
+              // itemCount: logic.patientListModelClass?.patient?.length ?? 0,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, i) {
+                var data = logic.patientListModelClass?.patient?[i];
+                return Container(
+                  margin: const EdgeInsets.only(bottom: 16),
+                  padding: const EdgeInsets.all(12),
+                  decoration: BoxDecoration(
+                    color: const Color.fromRGBO(241, 241, 241, 1),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        '${i+1}.',
-                        style: const TextStyle(fontWeight: FontWeight.bold),
-                      ),
-                      const SizedBox(width: 10),
-                      Expanded(
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            // Name
-                            const Text(
-                              "Vikram Singh",
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 4),
-
-                            // Package
-                            const Text(
-                              'Couple Combo Package (Rejuven...',
-                              style: TextStyle(
-                                fontSize: 13,
-                                color: Colors.black54,
-                              ),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            const SizedBox(height: 12),
-
-                            // Date + Doctor
-                            Row(
-                              children: const [
-                                Icon(Icons.calendar_today,
-                                    size: 16, color: Colors.red),
-                                SizedBox(width: 4),
-                                Text(
-                                  '31/01/2024',
-                                  style: TextStyle(fontSize: 13),
+                      /// Top Row
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            '${i+1}.',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Name
+                                const Text(
+                                  "Vikram Singh",
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                                SizedBox(width: 12),
-                                Icon(Icons.person,
-                                    size: 16, color: Colors.red),
-                                SizedBox(width: 4),
-                                Text(
-                                  'Jithesh',
-                                  style: TextStyle(fontSize: 13),
+                                const SizedBox(height: 4),
+
+                                // Package
+                                const Text(
+                                  'Couple Combo Package (Rejuven...',
+                                  style: TextStyle(
+                                    fontSize: 13,
+                                    color: Colors.black54,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(height: 12),
+
+                                // Date + Doctor
+                                Row(
+                                  children: const [
+                                    Icon(Icons.calendar_today,
+                                        size: 16, color: Colors.red),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      '31/01/2024',
+                                      style: TextStyle(fontSize: 13),
+                                    ),
+                                    SizedBox(width: 12),
+                                    Icon(Icons.person,
+                                        size: 16, color: Colors.red),
+                                    SizedBox(width: 4),
+                                    Text(
+                                      'Jithesh',
+                                      style: TextStyle(fontSize: 13),
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
-                          ],
-                        ),
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 12),
+
+                      /// Divider (full width now)
+                      const Divider(thickness: 1, color: Colors.grey),
+
+                      const SizedBox(height: 8),
+
+                      /// Bottom Action
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          const Text(
+                            "View Booking details",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                          Icon(Icons.arrow_forward_ios,
+                              size: 16, color: primaryColor),
+                        ],
                       ),
                     ],
                   ),
-
-                  const SizedBox(height: 12),
-
-                  /// Divider (full width now)
-                  const Divider(thickness: 1, color: Colors.grey),
-
-                  const SizedBox(height: 8),
-
-                  /// Bottom Action
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "View Booking details",
-                        style: TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      Icon(Icons.arrow_forward_ios,
-                          size: 16, color: primaryColor),
-                    ],
-                  ),
-                ],
-              ),
-            );
-          },
+                );
+              },
+            ),
+          ],
         );
       },
     );
